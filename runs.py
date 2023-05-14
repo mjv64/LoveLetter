@@ -20,8 +20,8 @@ def main():
         game = GameEngine()
         p1 = RandomAI()
         p2 = RandomAI()
-        p3 = HardAI(True)
-        p4 = HardAI(False)
+        p3 = RandomAI()
+        p4 = RandomAI()
         game.addPlayer(p1)
         game.addPlayer(p2)
         game.addPlayer(p3)
@@ -39,8 +39,8 @@ def main():
 
     print("Random1 Wins: " + str(wins[0]))
     print("Random2 Wins: " + str(wins[1]))
-    print("Aggressive Wins: " + str(wins[2]))
-    print("Defensive Wins: " + str(wins[3]))
+    print("Random3 Wins: " + str(wins[2]))
+    print("Random4 Wins: " + str(wins[3]))
 
 
 if __name__ == '__main__':
