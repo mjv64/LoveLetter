@@ -38,8 +38,20 @@ class RandomAI(LoveLetterAI):
             return Action(self, dealtCard, self, None)
 
         if not isinstance(choice, Handmaid):
-            while target is self:
-                target = random.choice(players)
+            other_players = [player for player in players if player is not self]
+            if other_players:
+                target = random.choice(other_players)
+            else:
+                # Other players are handmaiden'd up and can't be targeted
+                
+                # Only Prince is self-targeted, according to the rulebook in this 
+                # special instance where all other players are handmaiden'd up
+                if isinstance(choice, Prince):
+                    return Action(self, choice, self, None)
+                # Otherwise, set target to None and use custom logic 
+                # on other cards' perform functions, to ignore None target Actions
+                else:
+                    target = None
             
         classIndex = random.randrange(1,len(engine.util.cardTypes))
         return Action(self, choice, target, engine.util.cardTypes[classIndex])

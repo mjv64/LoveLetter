@@ -14,6 +14,8 @@ class Guard(Card):
     value = 1
 
     def perform(self, action, players, engine, deck):
+        if not action.target:
+            return # No valid target, behavior is to discard this card
         # guess a target's card
         # if correct, remove the target from game
         # if wrong, discard guard

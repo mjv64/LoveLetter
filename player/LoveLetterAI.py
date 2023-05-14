@@ -34,6 +34,6 @@ class LoveLetterAI(Player):
     # Choose a player that is not this bot
     def chooseRandom(self, players):
         player = self
-        while player == self:
-            player = choice(players)
+        other_players = [player for player in players if player is not self]
+        player = choice(other_players)
         return player

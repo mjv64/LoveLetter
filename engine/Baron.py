@@ -14,6 +14,9 @@ class Baron(Card):
     value = 3
     
     def perform(self, action, players, engine, deck):
+        if not action.target:
+            return # No valid target, behavior is to discard this card
+        
         # select player with perceived lower card (>2)
         # compare card values
         # if their hand has a higher value, eliminate doer
