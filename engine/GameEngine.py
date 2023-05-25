@@ -33,6 +33,7 @@ class GameEngine(object):
     def runGame(self):
         # make a NEW list
         self.players = list(self.origplayers)
+        eliminated = []
         assert len(self.players) >= 2
         for player in self.players:
             player.assignHand(self.deck.getCard(), self.players)
@@ -73,6 +74,7 @@ class GameEngine(object):
                 # Then tell players if someone was eliminated
                 if self.eliminatedThisRound != None:
                     self.notifyAllEliminate(self.eliminatedThisRound)
+                    eliminated.append(self.eliminatedThisRound)
                 self.grave += [action]
                 # End the game if nobody remains or the deck is empty
                 if len(self.players) == 1 or self.deck.size()==0:
@@ -80,10 +82,17 @@ class GameEngine(object):
                     self.running = False
                     break
         winner = self.players[0]
+        tie = False
         # TODO: handle ties?
         for player in self.players:
             if player.hand.value > winner.hand.value:
                 winner = player
+            if player.hand.value == winner.hand.value and player != self.players[0]:
+                tie = True
+        if not tie:
+            for p in self.players:
+                if p != winner and p not in eliminated:
+                    self.notifyAllEliminate(p)
         return winner
     
     def eliminate(self, player):
