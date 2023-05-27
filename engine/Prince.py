@@ -16,4 +16,5 @@ class Prince(Card):
 
     def perform(self, action, players, engine, deck):
         # discard player's hand
-        engine.abnormalDiscard(action.target, action.target.hand)
+        if action.target is not None:
+            engine.abnormalDiscard(action.target, action.target.hand)
